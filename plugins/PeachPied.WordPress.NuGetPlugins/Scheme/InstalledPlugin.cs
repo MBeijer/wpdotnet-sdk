@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace Peachpied.WordPress.NuGetPlugins.Scheme
+namespace Peachpied.WordPress.NuGetPlugins.Scheme;
+
+[JsonObject]
+sealed class InstalledPackage
 {
-    [JsonObject]
-    sealed class InstalledPackage
-    {
-        public string pluginId { get; set; }
-        public string version { get; set; }
-        public bool active { get; set; }
-    }
+    public string pluginId { get; set; }
+    public string version  { get; set; }
+    public bool   active   { get; set; }
 }

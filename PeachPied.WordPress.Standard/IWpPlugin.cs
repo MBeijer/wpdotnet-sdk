@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace PeachPied.WordPress.Standard
+namespace PeachPied.WordPress.Standard;
+
+/// <summary>
+/// Interface representing a WordPress plugin.
+/// </summary>
+public interface IWpPlugin
 {
     /// <summary>
-    /// Interface representing a WordPress plugin.
+    /// Initializes request to WordPress site.
     /// </summary>
-    public interface IWpPlugin
-    {
-        /// <summary>
-        /// Initializes request to WordPress site.
-        /// </summary>
-        ValueTask ConfigureAsync(WpApp app, CancellationToken token);
-    }
+    ValueTask ConfigureAsync(WpApp app, CancellationToken token);
 }

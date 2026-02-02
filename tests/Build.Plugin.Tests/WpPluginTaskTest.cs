@@ -3,28 +3,28 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Build.Plugin.Tests
+namespace Build.Plugin.Tests;
+
+/// <summary></summary>
+public class WpPluginTaskTest
 {
     /// <summary></summary>
-    public class WpPluginTaskTest
+    [Fact]
+    public void TestTags()
     {
-        /// <summary></summary>
-        [Fact]
-        public void TestTags()
-        {
-            Assert.Equal("test,tags", WpPluginTask.NormalizeTagList("Test ,  Tags  ,,"));
-            Assert.Equal("some tag", WpPluginTask.NormalizeTagList(",some tag"));
-        }
+        Assert.Equal("test,tags", WpPluginTask.NormalizeTagList("Test ,  Tags  ,,"));
+        Assert.Equal("some tag", WpPluginTask.NormalizeTagList(",some tag"));
+    }
 
-        /// <summary></summary>
-        [Fact]
-        public void TestReadmeTxt()
-        {
-            var meta = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
-            var sections = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
+    /// <summary></summary>
+    [Fact]
+    public void TestReadmeTxt()
+    {
+        var meta     = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
+        var sections = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
 
-            //
-            Assert.True(WpPluginTask.TryParseReadmeTxt(@"
+        //
+        Assert.True(WpPluginTask.TryParseReadmeTxt(@"
 === Test Title ===
 Contributors: Some Name
 Tags: blog, two-columns,
@@ -40,8 +40,7 @@ testing purposes
 This theme has long description.
 ".Split('\n'), meta, sections, out var description));
 
-            Assert.Contains("tags", (IDictionary<string, string>)meta);
-            Assert.Equal("Test Template\ntesting purposes", description);
-        }
+        Assert.Contains("tags", (IDictionary<string, string>)meta);
+        Assert.Equal("Test Template\ntesting purposes", description);
     }
 }

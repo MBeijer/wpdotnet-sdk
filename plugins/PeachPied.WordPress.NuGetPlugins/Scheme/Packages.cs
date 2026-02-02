@@ -1,40 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Newtonsoft.Json;
 
-namespace Peachpied.WordPress.NuGetPlugins.Scheme
+namespace Peachpied.WordPress.NuGetPlugins.Scheme;
+
+[JsonObject]
+sealed class Packages
 {
-    [JsonObject]
-    sealed class Packages
+    public IEnumerable<InstalledPackage> installed { get; set; }
+
+    public void Add(InstalledPackage package)
     {
-        public IEnumerable<InstalledPackage> installed { get; set; }
+        Remove(package.pluginId);
 
-        public void Add(InstalledPackage package)
+        installed = new List<InstalledPackage>(installed)
         {
-            Remove(package.pluginId);
+            package
+        };
+    }
 
-            installed = new List<InstalledPackage>(installed)
+    public void Remove(string packageId)
+    {
+        this.installed = installed.Where(p => p.pluginId != packageId);
+    }
+
+    public void SetActivate(string packageId, bool active)
+    {
+        foreach (var p in installed)
+        {
+            if (p.pluginId == packageId)
             {
-                package
-            };
-        }
-
-        public void Remove(string packageId)
-        {
-            this.installed = installed.Where(p => p.pluginId != packageId);
-        }
-
-        public void SetActivate(string packageId, bool active)
-        {
-            foreach (var p in installed)
-            {
-                if (p.pluginId == packageId)
-                {
-                    p.active = active;
-                    break;
-                }
+                p.active = active;
+                break;
             }
         }
     }

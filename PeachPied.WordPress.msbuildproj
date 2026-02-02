@@ -1,0 +1,62 @@
+﻿<Project Sdk="Peachpie.NET.Sdk">
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>0e51d101-0992-4aa6-a134-26ea3f2e3934</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <NoWarn>PHP0125,PHP5011,PHP6002,PHP5018,PHP5026,PHP6006</NoWarn>
+    <Copyright>WordPress</Copyright>
+    <Description>
+      Use "Peachpied.WordPress.AspNetCore" package to use the WordPress within ASP.NET Core application.
+      
+      This package is a dependency and does not work standalone.
+    </Description>
+    <DefineConstants>$(DefineConstants);</DefineConstants>
+    <LangVersion>7.4</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="**/*.php" Exclude="
+      obj/**;
+      bin/**;
+      wp-includes/class-json.php;
+      wp-config-sample.php;
+      wp-content/uploads/**;
+      wp-content/plugins/hello.php;
+      wp-content/plugins/akismet/**;
+      wp-content/plugins/**/Tests/**;
+      **/jetpack-autoloader/src/*.php;
+      **/SplFixedArray.php;
+      **/Composer/Installers/*.php
+      " />
+    <Content Include="**" Exclude="
+      obj/**;
+      bin/**;
+      .vs/**;
+      .vscode/**;
+      *.manifest;readme.html;
+      wp-admin/**/*.php;
+      wp-includes/**/*.php;
+      wp-content/cache/**;
+      wp-content/uploads/**;
+      wp-content/mu-plugins/**/*.php;
+      ##wp-content/plugins/**/*.php;
+      wp-content/plugins/akismet/**;
+      wp-content/plugins/hello.php;
+      ##wp-content/themes/**/*.php;
+      *.php;
+      *.msbuildproj;*.msbuildproj.user;
+      " CopyToOutputDirectory="PreserveNewest">
+      <PackagePath>contentFiles/any/$(TargetFramework)/wordpress/</PackagePath>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+      <Link>wordpress\%(RecursiveDir)%(Filename)%(Extension)</Link>
+    </Content>
+    <None Include="license.txt" Pack="true" PackagePath=""/>
+  </ItemGroup>
+  <ItemGroup>
+    <!--PackageReference Include="Peachpie.RequestHandler" Version="$(PeachpieVersion)" /-->
+    <PackageReference Include="System.Drawing.Common" Version="10.0.2" />
+    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
+    <ProjectReference Include="..\PeachPied.WordPress.Standard\PeachPied.WordPress.Standard.csproj" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.102" PrivateAssets="All" />
+  </ItemGroup>
+</Project>
