@@ -4,6 +4,11 @@
   <PropertyGroup>
     <WpContentTarget>mu-plugins</WpContentTarget>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="10.0.2" />
+    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
+  </ItemGroup>
   
   <Import Project="$(MSBuildThisFileDirectory)../PhpPlugin.Build.targets" />
   

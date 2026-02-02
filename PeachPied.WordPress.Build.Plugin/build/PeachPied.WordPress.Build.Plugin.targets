@@ -20,7 +20,7 @@
 
   <PropertyGroup Condition=" '$(BuildPluginTaskAssembly)'=='' ">
     <BuildPluginTaskAssembly Condition="'$(MSBuildRuntimeType)' != 'Core'">$(MSBuildThisFileDirectory)netstandard2.0\PeachPied.WordPress.Build.Plugin.dll</BuildPluginTaskAssembly>
-    <BuildPluginTaskAssembly Condition="'$(MSBuildRuntimeType)' == 'Core'">$(MSBuildThisFileDirectory)net6.0\PeachPied.WordPress.Build.Plugin.dll</BuildPluginTaskAssembly>
+    <BuildPluginTaskAssembly Condition="'$(MSBuildRuntimeType)' == 'Core'">$(MSBuildThisFileDirectory)net10.0\PeachPied.WordPress.Build.Plugin.dll</BuildPluginTaskAssembly>
   </PropertyGroup>
 
   <UsingTask AssemblyFile="$(BuildPluginTaskAssembly)" TaskName="WpPluginTask" />
@@ -85,7 +85,7 @@
 
     <!-- include plugin files as contentFiles -->
     <Content Update="**" CopyToOutputDirectory="PreserveNewest">
-      <PackagePath>contentFiles/any/net6.0/wordpress/$(PhpRelativePath)</PackagePath>
+      <PackagePath>contentFiles/any/net10.0/wordpress/$(PhpRelativePath)</PackagePath>
       <PackageCopyToOutput>true</PackageCopyToOutput>
       <Link>wordpress\$(PhpRelativePath)%(RecursiveDir)%(Filename)%(Extension)</Link>
     </Content>
@@ -97,10 +97,10 @@
       Peachpie.NET.Sdk adds all files into <None> items,
       if not excluded by user, we'll pack them into assets/ folder.
       We don't add it to the root of the package, since it would be opened by Visual Studio upon package restore.
-      
+
       There is a proposal to specify this information in nuspec https://github.com/NuGet/Home/wiki/Packaging-Documentation-within-the-nupkg
      -->
-     
+
     <!-- assets files -> assets/** -->
     <None Update="readme.md;readme.txt" Pack="true">
       <PackagePath>assets</PackagePath>

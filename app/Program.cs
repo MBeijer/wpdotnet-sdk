@@ -1,55 +1,31 @@
-﻿/*
- * Demo application with WordPress.
- */
-
-using System.IO;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Builder;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace peachserver
+namespace app;
+
+/// <summary>
+///
+/// </summary>
+public static class Program
 {
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            var host = WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .UseUrls("http://*:5004/")
-                .Build();
+	/// <summary>
+	///
+	/// </summary>
+	/// <param name="args"></param>
+	/// <returns></returns>
+	public static Task Main(string[] args)
+		=> CreateWebHostBuilder(args).Build().RunAsync();
 
-            host.Run();
-        }
-    }
-
-    class Startup
-    {
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddResponseCompression();
-
-            services.AddWordPress(options =>
-            {
-                //
-            });
-        }
-
-        public void Configure(IApplicationBuilder app, IHostEnvironment env, IConfiguration configuration)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            // add wordpress into the pipeline
-            // using default configuration from appsettings.json (IConfiguration), section WordPress
-            // using empty set of .NET plugins
-            app.UseWordPress();
-
-            app.UseDefaultFiles();
-        }
-    }
+	private static IHostBuilder CreateWebHostBuilder(string[] args) =>
+		Host.CreateDefaultBuilder(args)
+		    .ConfigureAppConfiguration(
+			    (_, config) =>
+			    {
+				    config.AddEnvironmentVariables();
+				    config.AddCommandLine(args);
+			    }
+		    )
+		    .ConfigureWebHostDefaults(webHost => webHost.UseStartup<Startup>());
 }

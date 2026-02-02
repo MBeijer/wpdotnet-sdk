@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net6.0</TargetFrameworks>
+    <TargetFramework>net10.0</TargetFramework>
     <!--TargetFrameworks Condition=" '$(MSBuildRuntimeType)'!='Core' ">$(TargetFrameworks);net472</TargetFrameworks-->
     <BuildOutputTargetFolder>build\</BuildOutputTargetFolder>
     <EnableDefaultNoneItems>true</EnableDefaultNoneItems>
@@ -15,15 +15,17 @@
       1. Create project XML file "{{slug_id}}.msbuildproj" in the plugin/theme folder:
 
       A. For a plugin:
-      <Project Sdk="PeachPied.WordPress.Build.Plugin/$(Version)">
-      </Project>
+      ```
+      Project Sdk="PeachPied.WordPress.Build.Plugin/$(Version)">
+      /Project>
+      ```
 
       B. For a theme:
-      <Project Sdk="PeachPied.WordPress.Build.Plugin/$(Version)">
-        <PropertyGroup>
-          <WpContentTarget>themes</WpContentTarget>
-        </PropertyGroup>
-      </Project>
+      Project Sdk="PeachPied.WordPress.Build.Plugin/$(Version)">
+        PropertyGroup>
+          WpContentTarget>themes/WpContentTarget>
+        /PropertyGroup>
+      /Project>
 
       2. Build or pack the project:
       dotnet build
@@ -32,7 +34,7 @@
       3. Reference the project/package from web application, see "PeachPied.WordPress.AspNetCore" for running the WordPress on ASP.NET Core.
     </Description>
   </PropertyGroup>
-	
+
   <!-- generate "Version.props" file with current Sdk version -->
   <Target Name="WriteSdkVersionProps" BeforeTargets="GenerateNuspec;CollectPackageReferences">
     <ItemGroup>
@@ -50,7 +52,9 @@
   </Target>
 
   <ItemGroup Condition="'$(TargetFramework)' != 'net46'">
-    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.9.20" ExcludeAssets="Runtime" PrivateAssets="All"  />
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="18.0.2" ExcludeAssets="Runtime" PrivateAssets="all">
+      <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'net46'">
     <PackageReference Include="Microsoft.Build.Framework;

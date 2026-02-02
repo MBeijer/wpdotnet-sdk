@@ -19,6 +19,7 @@ using Pchp.Core;
 using Pchp.Core.Utilities;
 using Peachpied.WordPress.NuGetPlugins.Protocol;
 using PeachPied.WordPress.Standard;
+#pragma warning disable CS0649 // Field is never assigned to, and will always have its default value
 
 namespace Peachpied.WordPress.NuGetPlugins
 {
@@ -169,7 +170,7 @@ namespace Peachpied.WordPress.NuGetPlugins
         public string author;
         public string requires; // empty or wp version
         public bool compatible_wp; // set by wp
-        public string requires_php; // empty 
+        public string requires_php; // empty
         public bool compatible_php; // set by wp
         public string screenshot_url;
         public double rating = 100;
@@ -286,7 +287,7 @@ namespace Peachpied.WordPress.NuGetPlugins
             };
 
             //var results = PackageSearchResource.SearchAsync(
-            //    "", new SearchFilter(true), 
+            //    "", new SearchFilter(true),
             //    skip: page * per_page, take: per_page, log: null, cancellationToken: CancellationToken.None).Result.ToList();
 
             var raw = RawSearchResourceV3.SearchPage(searchTerm, searchFilter, page * per_page, per_page, log, CancellationToken.None).Result;
@@ -366,7 +367,7 @@ namespace Peachpied.WordPress.NuGetPlugins
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="override"></param>
         /// <param name="action"></param>
